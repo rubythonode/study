@@ -121,18 +121,22 @@
         // Up
         if( moveUp && !moveDown ) {
             cat.accelarationY = -0.2;
+            cat.friction = 1;
         }
         // Down
         if( moveDown && !moveUp ) {
             cat.accelarationY = 0.2;
+            cat.friction = 1;
         }
         // Left
         if( moveLeft && !moveRight ) {
             cat.accelarationX = - 0.2;
+            cat.friction = 1;
         }
         // Right
         if( moveRight && !moveLeft ) {
             cat.accelarationX = 0.2;
+            cat.friction = 1;
         }
 
         // keys unpressed
@@ -144,12 +148,23 @@
             cat.accelarationX = 0;
             cat.vx = 0;
         }
+        if( !moveUp && !moveDown && !moveLeft && !moveRight ) {
+            cat.friction = 0.96;
+        }
 
         // Apply the acceleration
         cat.vx += cat.accelarationX;
         cat.vy += cat.accelarationY;
 
+        // Apply friction
+        cat.vx *= cat.friction;
+        cat.vy *= cat.friction;
+
         // Limit the speed
+        cat.vx = Math.min(cat.speedLimit, Math.max(cat.vx, -cat.speedLimit));
+        cat.vy = Math.min(cat.speedLimit, Math.max(cat.vy, -cat.speedLimit));
+
+        /*
         if( cat.vx > cat.speedLimit ) {
                 cat.vx = cat.speedLimit;
         }
@@ -162,6 +177,7 @@
         if( cat.vy < -cat.speedLimit ) {
             cat.vy = -cat.speedLimit;
         }
+        */
 
         // Move
         cat.x += cat.vx;
@@ -169,15 +185,19 @@
 
         // Screen boundaries
         if( cat.x < 0 ) {
+            cat.vx *= cat.bounce;
             cat.x = 0;
         }
         if( cat.y < 0 ) {
+            cat.vy *= cat.bounce;
             cat.y = 0;
         }
         if( cat.x + cat.width > canvas.width ) {
+            cat.vx *= cat.bounce;
             cat.x = canvas.width - cat.width;
         }
         if( cat.y + cat.height > canvas.height ) {
+            cat.vy *= cat.bounce;
             cat.y = canvas.height - cat.height;
         }
     }

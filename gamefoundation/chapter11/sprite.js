@@ -9,7 +9,7 @@ var spriteObject = {
     sourceWidth: 64,
     sourceHeight: 64,
     width: 64,
-    hegith: 64,
+    height: 64,
     x: 0,
     y: 0,
     vx: 0,
@@ -20,7 +20,7 @@ var spriteObject = {
     accelarationX: 0,
     accelarationY: 0,
     speedLimit: 5,
-    friction: 5,
+    friction: 0.96,
     bounce: -0.7,
     gravity: 0.3,
 
